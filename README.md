@@ -1,2 +1,9 @@
-# kpi-trvsiot-cpackatom
-Repository of 14th team (C-PACK ATOM) for "Technologies for Development technologies of embedded IoT systems". Each lab is in a separate branch.
+# Laboratory work №1
+Реалізація agent модулю системи.
+
+Виконали студенти команди 14:
+* Шикаловський Михайло Юрійович ІО-13
+* Скоробогатько Іван Андрійович ІО-13
+
+Для запуску 
+```cd docker && docker-compose up --build```
