@@ -1,2 +1,7 @@
-# kpi-trvsiot-cpackatom
-Repository of 14th team (C-PACK ATOM) for "Technologies for Development technologies of embedded IoT systems". Each lab is in a separate branch.
+# Laboratory work №3
+
+Реалізація hub модулю системи.
+
+Виконали студентки команди 14:
+* Грень Ірина Сергіївна ІО-11
+* Лоханько Ксенія Вікторівна ІО-11
