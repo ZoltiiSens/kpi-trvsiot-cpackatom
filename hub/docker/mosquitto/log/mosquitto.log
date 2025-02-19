@@ -1,0 +1,64 @@
+1739899712: mosquitto version 2.0.20 starting
+1739899712: Config loaded from /mosquitto/config/mosquitto.conf.
+1739899712: Opening ipv4 listen socket on port 1883.
+1739899712: Opening ipv6 listen socket on port 1883.
+1739899712: mosquitto version 2.0.20 running
+1739899714: New connection from 172.21.0.3:53963 on port 1883.
+1739899714: New client connected from 172.21.0.3:53963 as auto-90A11970-78F1-2F83-5384-BB4CF0C675DD (p2, c1, k60).
+1739900780: New connection from 172.21.0.1:51576 on port 1883.
+1739900780: New client connected from 172.21.0.1:51576 as mqtt-explorer-e4d09cfa (p2, c1, k60).
+1739900787: Client mqtt-explorer-e4d09cfa disconnected.
+1739900806: New connection from 172.21.0.1:50640 on port 1883.
+1739900806: New client connected from 172.21.0.1:50640 as mqtt-explorer-e4d09cfa (p2, c1, k60).
+1739901513: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1739901803: Client mqtt-explorer-e4d09cfa disconnected.
+1739903942: mosquitto version 2.0.20 starting
+1739903942: Config loaded from /mosquitto/config/mosquitto.conf.
+1739903942: Opening ipv4 listen socket on port 1883.
+1739903942: Opening ipv6 listen socket on port 1883.
+1739903942: mosquitto version 2.0.20 running
+1739903950: New connection from 172.21.0.3:36277 on port 1883.
+1739903950: New client connected from 172.21.0.3:36277 as auto-1D6B0412-200A-6332-B21C-AA084E9BC2C8 (p2, c1, k60).
+1739904159: Client auto-1D6B0412-200A-6332-B21C-AA084E9BC2C8 closed its connection.
+1739904166: mosquitto version 2.0.20 terminating
+1739904166: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1739904406: mosquitto version 2.0.20 starting
+1739904406: Config loaded from /mosquitto/config/mosquitto.conf.
+1739904406: Opening ipv4 listen socket on port 1883.
+1739904406: Opening ipv6 listen socket on port 1883.
+1739904406: mosquitto version 2.0.20 running
+1739904420: New connection from 172.21.0.3:58427 on port 1883.
+1739904420: New client connected from 172.21.0.3:58427 as auto-A8294ADC-ECE6-4AF7-F480-3BC0D6105251 (p2, c1, k60).
+1739904915: Client auto-A8294ADC-ECE6-4AF7-F480-3BC0D6105251 closed its connection.
+1739904919: mosquitto version 2.0.20 terminating
+1739904919: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1739904998: mosquitto version 2.0.20 starting
+1739904998: Config loaded from /mosquitto/config/mosquitto.conf.
+1739904998: Opening ipv4 listen socket on port 1883.
+1739904998: Opening ipv6 listen socket on port 1883.
+1739904998: mosquitto version 2.0.20 running
+1739905018: New connection from 172.21.0.3:55535 on port 1883.
+1739905018: New client connected from 172.21.0.3:55535 as auto-E0CDD599-AF7F-5617-00A3-80617C3188D4 (p2, c1, k60).
+1739905142: Client auto-E0CDD599-AF7F-5617-00A3-80617C3188D4 closed its connection.
+1739905145: mosquitto version 2.0.20 terminating
+1739905145: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1739905777: mosquitto version 2.0.20 starting
+1739905777: Config loaded from /mosquitto/config/mosquitto.conf.
+1739905777: Opening ipv4 listen socket on port 1883.
+1739905777: Opening ipv6 listen socket on port 1883.
+1739905777: mosquitto version 2.0.20 running
+1739905782: New connection from 172.21.0.3:39967 on port 1883.
+1739905782: New client connected from 172.21.0.3:39967 as auto-BE10F208-5CEE-EC98-E579-8FBDD2B6AEA4 (p2, c1, k60).
+1739906139: Client auto-BE10F208-5CEE-EC98-E579-8FBDD2B6AEA4 closed its connection.
+1739906141: mosquitto version 2.0.20 terminating
+1739906141: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1739906251: mosquitto version 2.0.20 starting
+1739906251: Config loaded from /mosquitto/config/mosquitto.conf.
+1739906251: Opening ipv4 listen socket on port 1883.
+1739906251: Opening ipv6 listen socket on port 1883.
+1739906251: mosquitto version 2.0.20 running
+1739906257: New connection from 172.22.0.3:35087 on port 1883.
+1739906257: New client connected from 172.22.0.3:35087 as auto-D70103C2-2826-9894-65CE-BCD05A3D769B (p2, c1, k60).
+1739906374: Client auto-D70103C2-2826-9894-65CE-BCD05A3D769B closed its connection.
+1739906376: mosquitto version 2.0.20 terminating
+1739906376: Saving in-memory database to /mosquitto/data//mosquitto.db.
