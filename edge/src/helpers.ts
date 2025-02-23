@@ -39,7 +39,6 @@ export function toValidMqttEnv(
 }
 
 interface AgentData {
-  user_id: number;
   accelerometer: AgentDataAccelerometer;
   gps: AgentDataGps;
   timestamp: string;
@@ -75,7 +74,6 @@ export function toProcessedData(props: any): ProcessedAgentData {
   return {
     road_state: props.accelerometer.z < 15000 ? "bad" : "good",
     agent_data: {
-      user_id: 1,
       accelerometer: {
         x: props.accelerometer.x,
         y: props.accelerometer.y,
