@@ -1,10 +1,13 @@
 import mqtt from "mqtt";
-import { toValidMqttEnv } from "./helpers";
+import { sendViaRest, toProcessedData, toValidMqttEnv } from "./helpers";
 
 const env = toValidMqttEnv({
   MQTT_BROKER_HOST: process.env.MQTT_BROKER_HOST,
   MQTT_BROKER_PORT: process.env.MQTT_BROKER_PORT,
   MQTT_TOPIC: process.env.MQTT_TOPIC,
+  HUB_MQTT_TOPIC: process.env.HUB_MQTT_TOPIC,
+  HUB_PORT: process.env.HUB_PORT,
+  HUB_HOST: process.env.HUB_HOST,
 });
 
 const client = mqtt.connect(
@@ -22,14 +25,40 @@ client.on("connect", () => {
   });
 });
 
-client.on("message", (topic, message) => {
-  console.log(
-    `MQTT: Received message on topic ${topic}: ${message.toString()}`,
-  );
+client.on("message", async (topic, message) => {
+  try {
+    console.log(`MQTT: Received message on topic ${topic}.`);
+
+    const data = await JSON.parse(message.toString());
+
+    const processedData = toProcessedData(data);
+
+    console.log(JSON.stringify(processedData));
+
+    client.publish(env.HUB_MQTT_TOPIC, JSON.stringify(processedData), (err) => {
+      if (!err) {
+        console.log(
+          `MQTT: Processed data published to topic: ${env.HUB_MQTT_TOPIC}`,
+        );
+      } else {
+        console.error("MQTT: Failed to publish processed data", err);
+      }
+    });
+
+    await sendViaRest({
+      data: processedData,
+      url: `${env.HUB_HOST}:${env.HUB_PORT}`,
+    });
+
+    console.log("MQTT: message processed.");
+  } catch (err: any) {
+    console.log(err.message);
+  }
 });
 
-client.on("error", (error) => {
-  console.error("MQTT: error - ", error);
+client.on("error", (err) => {
+  console.log(`mqtt://${env.MQTT_BROKER_HOST}:${env.MQTT_BROKER_PORT}`);
+  console.error("MQTT: error - ", err);
 });
 
 client.on("close", () => {
