@@ -1,16 +1,21 @@
 import mqtt from "mqtt";
+import { toValidMqttEnv } from "./helpers";
 
-const MQTT_BROKER_HOST = "test.mosquitto.org";
-const MQTT_BROKER_PORT = 1883;
-const MQTT_TOPIC = "agent_data_topic";
+const env = toValidMqttEnv({
+  MQTT_BROKER_HOST: process.env.MQTT_BROKER_HOST,
+  MQTT_BROKER_PORT: process.env.MQTT_BROKER_PORT,
+  MQTT_TOPIC: process.env.MQTT_TOPIC,
+});
 
-const client = mqtt.connect(`mqtt://${MQTT_BROKER_HOST}:${MQTT_BROKER_PORT}`);
+const client = mqtt.connect(
+  `mqtt://${env.MQTT_BROKER_HOST}:${env.MQTT_BROKER_PORT}`,
+);
 
 client.on("connect", () => {
   console.log("Connected to MQTT broker");
-  client.subscribe(MQTT_TOPIC, (err) => {
+  client.subscribe(env.MQTT_TOPIC, (err) => {
     if (!err) {
-      console.log(`MQTT: Subscribed to topic: ${MQTT_TOPIC}`);
+      console.log(`MQTT: Subscribed to topic: ${env.MQTT_TOPIC}`);
     } else {
       console.error("MQTT: Failed to subscribe to topic", err);
     }
