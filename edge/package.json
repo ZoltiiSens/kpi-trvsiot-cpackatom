@@ -1,0 +1,20 @@
+{
+  "name": "edge",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "mqtt": "^5.10.3"
+  },
+  "devDependencies": {
+    "@types/mqtt": "^0.0.34",
+    "@types/node": "^22.13.5",
+    "typescript": "^5.7.3"
+  }
+}
