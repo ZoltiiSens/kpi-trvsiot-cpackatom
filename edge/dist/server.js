@@ -39,7 +39,7 @@ client.on("message", (topic, message) => __awaiter(void 0, void 0, void 0, funct
         console.log(`MQTT: Received message on topic ${topic}.`);
         const data = yield JSON.parse(message.toString());
         const processedData = (0, helpers_1.toProcessedData)(data);
-        console.log(JSON.stringify(processedData));
+        // console.log(JSON.stringify(processedData));
         client.publish(env.HUB_MQTT_TOPIC, JSON.stringify(processedData), (err) => {
             if (!err) {
                 console.log(`MQTT: Processed data published to topic: ${env.HUB_MQTT_TOPIC}`);
@@ -48,10 +48,10 @@ client.on("message", (topic, message) => __awaiter(void 0, void 0, void 0, funct
                 console.error("MQTT: Failed to publish processed data", err);
             }
         });
-        yield (0, helpers_1.sendViaRest)({
-            data: processedData,
-            url: `${env.HUB_HOST}:${env.HUB_PORT}`,
-        });
+        // yield (0, helpers_1.sendViaRest)({
+        //     data: processedData,
+        //     url: `${env.HUB_HOST}:${env.HUB_PORT}`,
+        // });
         console.log("MQTT: message processed.");
     }
     catch (err) {

@@ -37,12 +37,6 @@ async def create_processed_agent_data(data: List[ProcessedAgentData]):
             .limit(created_count)
         )
         rows = db_session.execute(select_stmt).fetchall()
-        print(123)
-        print(rows)
-        # rows = list(reversed(rows))
-        # print(456)
-        # print(rows)
-
         return str(rows)
     finally:
         db_session.close()

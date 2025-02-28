@@ -33,7 +33,7 @@ client.on("message", async (topic, message) => {
 
     const processedData = toProcessedData(data);
 
-    console.log(JSON.stringify(processedData));
+    // console.log(JSON.stringify(processedData));
 
     client.publish(env.HUB_MQTT_TOPIC, JSON.stringify(processedData), (err) => {
       if (!err) {
@@ -45,10 +45,10 @@ client.on("message", async (topic, message) => {
       }
     });
 
-    await sendViaRest({
-      data: processedData,
-      url: `${env.HUB_HOST}:${env.HUB_PORT}`,
-    });
+    // await sendViaRest({
+    //   data: processedData,
+    //   url: `${env.HUB_HOST}:${env.HUB_PORT}`,
+    // });
 
     console.log("MQTT: message processed.");
   } catch (err: any) {

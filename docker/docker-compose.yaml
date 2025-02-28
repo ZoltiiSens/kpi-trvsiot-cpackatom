@@ -74,24 +74,24 @@ services:
       db_network:
       hub:
 
-#  edge:
-#    container_name: edge
-#    build: ../edge
-#    depends_on:
-#      - mqtt
-#      - hub
-#    environment:
-#      MQTT_BROKER_HOST: "mqtt"
-#      MQTT_BROKER_PORT: 1883
-#      MQTT_TOPIC: "agent_data_topic"
-#      HUB_HOST: "hub"
-#      HUB_PORT: 8000
-#      HUB_MQTT_BROKER_HOST: "mqtt"
-#      HUB_MQTT_BROKER_PORT: 1883
-#      HUB_MQTT_TOPIC: "processed_data_topic"
-#    networks:
-#      mqtt_network:
-#      edge_hub:
+  edge:
+    container_name: edge
+    build: ../edge
+    depends_on:
+      - mqtt
+      - hub
+    environment:
+      MQTT_BROKER_HOST: "mqtt"
+      MQTT_BROKER_PORT: 1883
+      MQTT_TOPIC: "agent_data_topic"
+      HUB_HOST: "hub"
+      HUB_PORT: 8000
+      HUB_MQTT_BROKER_HOST: "mqtt"
+      HUB_MQTT_BROKER_PORT: 1883
+      HUB_MQTT_TOPIC: "processed_data_topic"
+    networks:
+      mqtt_network:
+      edge_hub:
 
   hub:
     container_name: hub
