@@ -1,5 +1,5 @@
 import mqtt from "mqtt";
-import { sendViaRest, toProcessedData, toValidMqttEnv } from "./helpers";
+import { toProcessedData, toValidMqttEnv } from "./helpers";
 
 const env = toValidMqttEnv({
   MQTT_BROKER_HOST: process.env.MQTT_BROKER_HOST,
@@ -33,8 +33,6 @@ client.on("message", async (topic, message) => {
 
     const processedData = toProcessedData(data);
 
-    // console.log(JSON.stringify(processedData));
-
     client.publish(env.HUB_MQTT_TOPIC, JSON.stringify(processedData), (err) => {
       if (!err) {
         console.log(
@@ -44,11 +42,6 @@ client.on("message", async (topic, message) => {
         console.error("MQTT: Failed to publish processed data", err);
       }
     });
-
-    // await sendViaRest({
-    //   data: processedData,
-    //   url: `${env.HUB_HOST}:${env.HUB_PORT}`,
-    // });
 
     console.log("MQTT: message processed.");
   } catch (err: any) {
