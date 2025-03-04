@@ -1,2 +1,9 @@
 # kpi-trvsiot-cpackatom
-Repository of 14th team (C-PACK ATOM) for "Technologies for Development technologies of embedded IoT systems". Each lab is in a separate branch.
+Реалізація Store модулю системи.
+
+Виконали студенти команди 14:
+
+Литвиненко Роман Юрійович ІО-13
+Казак Вадим Сергійович ІО-13
+
+Для запуску cd docker && docker-compose up --build
