@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, DateTime
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, DateTime, Boolean
 from sqlalchemy.orm import sessionmaker
 
 
@@ -21,5 +21,7 @@ processed_agent_data = Table(
     Column("z", Float),
     Column("latitude", Float),
     Column("longitude", Float),
+    Column("peak", Boolean),
+    Column("pit", Boolean),
     Column("timestamp", DateTime),
 )

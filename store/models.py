@@ -43,4 +43,6 @@ class ProcessedAgentDataInDB(BaseModel):
     z: float
     latitude: float
     longitude: float
+    peak: bool
+    pit: bool
     timestamp: datetime

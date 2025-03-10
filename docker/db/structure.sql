@@ -6,5 +6,7 @@ CREATE TABLE processed_agent_data (
     z FLOAT,
     latitude FLOAT,
     longitude FLOAT,
+    peak BOOLEAN,
+    pit BOOLEAN,
     timestamp TIMESTAMP
 );
