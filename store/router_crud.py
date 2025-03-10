@@ -1,5 +1,6 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
+from scipy.signal import find_peaks
 
 from database import SessionLocal, processed_agent_data
 from models import ProcessedAgentData, ProcessedAgentDataInDB
@@ -13,8 +14,33 @@ router = APIRouter(prefix='/processed_agent_data')
 # FastAPI CRUDL endpoints
 @router.post("/")
 async def create_processed_agent_data(data: List[ProcessedAgentData]):
+
+    z_values = [d.agent_data.accelerometer.z for d in data]
+
+    peak_distance = 5
+    peak_height = 16670
+    peak_prominence = 5
+
+    peaks_max, _ = find_peaks(
+        z_values,
+        distance=peak_distance,
+        height=peak_height,
+        prominence=peak_prominence
+    )
+
+    inverted_z = [-1 * z for z in z_values]
+    pit_height = -16660
+    pits_min, _ = find_peaks(
+        inverted_z,
+        distance=peak_distance,
+        height=(-1) * pit_height,
+        prominence=peak_prominence
+    )
+
+
+
     to_insert = []
-    for item in data:
+    for i, item in enumerate(data):
         to_insert.append({
             "road_state": item.road_state,
             "x": item.agent_data.accelerometer.x,
@@ -23,6 +49,8 @@ async def create_processed_agent_data(data: List[ProcessedAgentData]):
             "latitude": item.agent_data.gps.latitude,
             "longitude": item.agent_data.gps.longitude,
             "timestamp": str(item.agent_data.timestamp),
+            "peak": i in peaks_max,
+            "pit": i in pits_min
         })
 
     db_session = SessionLocal()
