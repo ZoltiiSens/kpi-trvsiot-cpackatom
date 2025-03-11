@@ -51,7 +51,7 @@ def connect_mqtt(broker, port):
     
 def publish(client, topic, delay, datasource, gps):
     while True:
-        time.sleep(delay)
+        time.sleep(delay * 3)
         msg = aggregate_data(datasource.read(), gps.get_gps_data())
         result = client.publish(topic, msg)
         # result: [0, 1]
