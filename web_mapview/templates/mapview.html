@@ -295,7 +295,6 @@
 <!--&lt;!&ndash;</script>&ndash;&gt;-->
 
 
-
 <!--<script>-->
 <!--    const map = L.map('map').setView([50.4501, 30.5234], 13);-->
 <!--    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
@@ -386,76 +385,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Tracking Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <style>
-        #map { height: 90vh; width: 100%; }
+        #map {
+            height: 90vh;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-    <div id="map"></div>
+<div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Map creation
-        const map = L.map('map').setView([50.4501, 30.5234], 15); // Default Kyiv center
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Map creation
+    const map = L.map('map').setView([50.4501, 30.5234], 15); // Default Kyiv center
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-        // Car icon
-        const carIcon = L.icon({
-            iconUrl: "{{ url_for('static', path='/images/car.png') }}",
-            iconSize: [32, 42],
-            iconAnchor: [16, 42],
-        });
+    // Car icon
+    const carIcon = L.icon({
+        iconUrl: "{{ url_for('static', path='/images/car.png') }}",
+        iconSize: [32, 42],
+        iconAnchor: [16, 42],
+    });
 
-        // Constants
-        let carMarker = null;
-        let polyline = L.polyline([], { color: 'blue' }).addTo(map);
-        let path = [];
-        let currentIndex = 0;
-        let isProcessing = false;
+    // Peak icon
+    const peakIcon = L.icon({
+        iconUrl: "{{ url_for('static', path='/images/peak.png') }}",
+        iconSize: [32, 42],
+        iconAnchor: [16, 42],
+    });
 
-        // Websocket connection handling
-        const socket = new WebSocket("{{ websocket_url }}");
-        socket.onopen = () => console.log("WebSocket connected.");
-        socket.onerror = error => console.error("WebSocket error:", error);
-        socket.onclose = () => console.warn("WebSocket closed.");
-        socket.onmessage = function(event) {
-            try {
-                const newPoints = JSON.parse(event.data); // [{x, y, z, latitude, longitude, timestamp}]
-                newPoints.reverse();
-                newPoints.forEach(point => {
-                    path.push([point.longitude, point.latitude]);
-                });
+    // Pothole icon
+    const potholeIcon = L.icon({
+        iconUrl: "{{ url_for('static', path='/images/pothole.png') }}",
+        iconSize: [32, 42],
+        iconAnchor: [16, 42],
+    });
 
-                if (!isProcessing) {
-                    processPoints();
-                }
-            } catch (e) {
-                console.error("Error parsing WebSocket data:", e);
-            }
-        };
+    // Constants
+    let carMarker = null;
+    let polyline = L.polyline([], {color: 'blue'}).addTo(map);
+    let path = [];
+    let currentIndex = 0;
+    let prevIndex = 0;
+    let isProcessing = false;
+    const peaks = new Map();
+    const potholes = new Map();
 
-        // Function which draw line and move car on given points
-        function processPoints() {
-            if (currentIndex < path.length) {
-                isProcessing = true;
-                polyline.addLatLng(path[currentIndex]);
+    // Websocket connection handling
+    const socket = new WebSocket("{{ websocket_url }}");
+    socket.onopen = () => console.log("WebSocket connected.");
+    socket.onerror = error => console.error("WebSocket error:", error);
+    socket.onclose = () => console.warn("WebSocket closed.");
+    socket.onmessage = function (event) {
+        try {
+            const newPoints = JSON.parse(event.data); // [{x, y, z, latitude, longitude, peak, pit, timestamp}]
 
-                if (carMarker) {
-                    carMarker.setLatLng(path[currentIndex]);
-                } else {
-                    carMarker = L.marker(path[currentIndex], { icon: carIcon }).addTo(map);
-                }
+            newPoints.reverse();
+            newPoints.forEach(({latitude, longitude, peak, pit}) => {
+                path.push([longitude, latitude]);
 
-                currentIndex++;
-                setTimeout(processPoints, 100);
-            } else {
-                isProcessing = false;
-            }
+                if (peak) peaks.set(path.length - 1, [latitude, longitude]);
+
+                if (pit) potholes.set(path.length - 1, [latitude, longitude]);
+            });
+
+            if (!isProcessing) processPoints();
+        } catch (e) {
+            console.error("Error parsing WebSocket data:", e);
+        }
+    };
+
+    // Function which draw line and move car on given points
+    function processPoints() {
+        if (currentIndex >= path.length) {
+            isProcessing = false;
+            return;
         }
 
-    </script>
+        isProcessing = true;
+        polyline.addLatLng(path[currentIndex]);
+
+        if (carMarker) {
+            carMarker.setLatLng(path[currentIndex]);
+        } else {
+            carMarker = L.marker(path[currentIndex], {icon: carIcon}).addTo(map);
+        }
+
+        addMarker(peaks, currentIndex, peakIcon);
+        addMarker(potholes, currentIndex, potholeIcon);
+
+        prevIndex = currentIndex;
+
+        currentIndex++;
+        setTimeout(processPoints, 100);
+    }
+
+    function addMarker(mapData, index, icon) {
+        if (mapData.has(index)) {
+            const [lat, lon] = mapData.get(index);
+            L.marker([lon, lat], {icon}).addTo(map);
+        }
+        // {1: [x, y], 2: [x, y]}  ->
+        mapData.get(prevIndex)
+    }
+
+</script>
 
 </body>
 </html>
