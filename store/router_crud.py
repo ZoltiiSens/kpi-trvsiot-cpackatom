@@ -1,11 +1,11 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
 from scipy.signal import find_peaks
+from google_sheets_operate import google_read_values, google_insert_values
 
 from database import SessionLocal, processed_agent_data
 from models import ProcessedAgentData, ProcessedAgentDataInDB
 from router_ws import send_data_to_subscribers
-
 
 # FastAPI router
 router = APIRouter(prefix='/processed_agent_data')
@@ -14,7 +14,6 @@ router = APIRouter(prefix='/processed_agent_data')
 # FastAPI CRUDL endpoints
 @router.post("/")
 async def create_processed_agent_data(data: List[ProcessedAgentData]):
-
     z_values = [d.agent_data.accelerometer.z for d in data]
 
     peak_distance = 5
@@ -37,7 +36,20 @@ async def create_processed_agent_data(data: List[ProcessedAgentData]):
         prominence=peak_prominence
     )
 
-
+    to_insert_excel = []
+    for i, item in enumerate(data):
+        to_insert_excel.append([
+            item.road_state,
+            item.agent_data.accelerometer.x,
+            item.agent_data.accelerometer.y,
+            item.agent_data.accelerometer.z,
+            item.agent_data.gps.latitude,
+            item.agent_data.gps.longitude,
+            str(item.agent_data.timestamp),
+            i in peaks_max,
+            i in pits_min
+        ])
+    google_insert_values(list(reversed(to_insert_excel)), len(google_read_values()) + 1)
 
     to_insert = []
     for i, item in enumerate(data):
