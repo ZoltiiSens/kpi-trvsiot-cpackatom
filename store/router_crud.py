@@ -16,9 +16,9 @@ router = APIRouter(prefix='/processed_agent_data')
 async def create_processed_agent_data(data: List[ProcessedAgentData]):
     z_values = [d.agent_data.accelerometer.z for d in data]
 
-    peak_distance = 5
+    peak_distance = 10
     peak_height = 16670
-    peak_prominence = 5
+    peak_prominence = 100
 
     peaks_max, _ = find_peaks(
         z_values,
