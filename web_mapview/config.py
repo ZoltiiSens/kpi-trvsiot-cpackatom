@@ -1,0 +1,8 @@
+import os
+
+
+WEBSOCKET_HOST = os.environ.get("WEBSOCKET_HOST") or 'localhost'
+WEBSOCKET_PORT = os.environ.get("WEBSOCKET_PORT") or 8000
+WEBSOCKET_ENDPOINT = os.environ.get("WEBSOCKET_ENDPOINT") or 'ws'
+
+WEBSOCKET_URL = f'ws://{WEBSOCKET_HOST}:{WEBSOCKET_PORT}/{WEBSOCKET_ENDPOINT}/'

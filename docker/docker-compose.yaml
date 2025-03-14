@@ -94,19 +94,19 @@ services:
       mqtt_network:
       edge_hub:
 
-#  mapview:
-#    container_name: mapView
-#    build: ../MapView
-#    depends_on:
-#      - mqtt
-#      - hub
-#      - store
-#      - edge
-#    environment:
-#      STORE_HOST: "store"
-#      STORE_PORT: 8000
-#    networks:
-#      mapview_store:
+  webmapview:
+    container_name: webmapview
+    build: ../web_mapview
+    depends_on:
+      - store
+    environment:
+      WEBSOCKET_HOST: "localhost"
+      WEBSOCKET_PORT: 8000
+      WEBSOCKET_ENDPOINT: "ws"
+    ports:
+      - "7000:8000"
+    networks:
+      mapview_store:
 
   hub:
     container_name: hub
