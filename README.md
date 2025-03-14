@@ -1,8 +1,5 @@
-# Додаткова технологія - візуалізація даних у веб
-Виконали студенти команди 14:
+# kpi-trvsiot-cpackatom
 
-* Литвиненко Роман Юрійович ІО-13
-* Казак Вадим Сергійович ІО-13
+Repository of 14th team (C-PACK ATOM) for "Technologies for Development technologies of embedded IoT systems". Each lab is in a separate branch.
 
-Для запуску 
-```cd docker && docker-compose up --build```
+Technologies implemented during HACKATHON are in the separate branches too. Additionally, the whole project now is in the master branch.
