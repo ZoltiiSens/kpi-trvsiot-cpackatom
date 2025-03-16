@@ -19,12 +19,8 @@ services:
     image: postgres:latest
     container_name: postgres_db
     restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: test_db
+    env_file:
+      - path: ../default.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/structure.sql:/docker-entrypoint-initdb.d/structure.sql
@@ -37,9 +33,8 @@ services:
     container_name: pgadmin4
     image: dpage/pgadmin4
     restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+    env_file:
+      - path: ../default.env
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
@@ -61,12 +56,8 @@ services:
     depends_on:
       - postgres_db
     restart: always
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: test_db
-      POSTGRES_HOST: postgres_db
-      POSTGRES_PORT: 5432
+    env_file:
+      - path: ../default.env
     ports:
       - "8000:8000"
     networks:
@@ -99,10 +90,8 @@ services:
     build: ../web_mapview
     depends_on:
       - store
-    environment:
-      WEBSOCKET_HOST: "localhost"
-      WEBSOCKET_PORT: 8000
-      WEBSOCKET_ENDPOINT: "ws"
+    env_file:
+      - path: ../default.env
     ports:
       - "7000:8000"
     networks:
@@ -115,11 +104,9 @@ services:
       - mqtt
       - redis
       - store
+    env_file:
+      - path: ../default.env
     environment:
-      STORE_API_HOST: "store"
-      STORE_API_PORT: 8000
-      REDIS_HOST: "redis"
-      REDIS_PORT: 6379
       MQTT_BROKER_HOST: "mqtt"
       MQTT_BROKER_PORT: 1883
       MQTT_TOPIC: "processed_data_topic"
